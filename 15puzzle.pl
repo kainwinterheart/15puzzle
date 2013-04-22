@@ -272,8 +272,9 @@ sub h
 	{
 		return $h;
 	}
+
+	my $h    = ( $self -> how_many_of_points_are_not_at_the_goal() * scalar( $self -> all_points() ) );
 # =item
-	my $h    = $self -> how_many_of_points_are_not_at_the_goal();
 	my @data = @{ $self -> points() };
 	my $i    = scalar( @data );
 
@@ -302,7 +303,7 @@ sub h
 #			$h += $penalty * $c;
 		}
 	}
-# =cut
+
 	$h += ( sum( map{ $_ -> manhattan_distance() } $self -> all_points() ) * 2 );
 
 	if( 0 )
@@ -351,6 +352,7 @@ sub h
 			}
 		}
 	}
+# =cut
 
 	return $self -> { 'h' } = $h;
 
@@ -638,7 +640,7 @@ sub get
 
 	die unless defined( my $min_f = $self -> { 'min_f' } ); # min( keys %{ $self -> { 'openset_hash_f' } } );
 
-#	@{ $self -> { 'openset_hash_f' } -> { $min_f } } = sort{ $a -> g() <=> $b -> g() } @{ $self -> { 'openset_hash_f' } -> { $min_f } };
+	@{ $self -> { 'openset_hash_f' } -> { $min_f } } = sort{ $a -> g() <=> $b -> g() } @{ $self -> { 'openset_hash_f' } -> { $min_f } };
 
 	my $best  = shift @{ $self -> { 'openset_hash_f' } -> { $min_f } };
 =item
