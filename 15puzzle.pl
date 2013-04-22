@@ -303,9 +303,9 @@ sub h
 		}
 	}
 # =cut
-	$h += sum( map{ $_ -> manhattan_distance() } $self -> all_points() );
+	$h += ( sum( map{ $_ -> manhattan_distance() } $self -> all_points() ) * 2 );
 
-#	if( 0 )
+	if( 0 )
 	{
 		my $top   = undef;
 		my $field = $self;
@@ -317,22 +317,22 @@ sub h
 
 		if( $top )
 		{
-#			my $d = 0;
-#			my $c = 0;
+			my $d = 0;
+			my $c = 0;
 
 			foreach my $initial_point ( $top -> all_points() )
 			{
 				my $point = $self -> get_point_by_data( $initial_point -> data() );
 
-				$h += $point -> manhattan_distance( $initial_point -> x(), $initial_point -> y() );
-#				if( my $ld = $point -> manhattan_distance( $initial_point -> x(), $initial_point -> y() ) )
-#				{
-#					$d += $ld;
-#					++$c;
-#				}
+#				$h += $point -> manhattan_distance( [ $initial_point -> x(), $initial_point -> y() ] );
+				if( my $ld = $point -> manhattan_distance( [ $initial_point -> x(), $initial_point -> y() ] ) )
+				{
+					$d += $ld;
+					++$c;
+				}
 			}
 
-#			$h += ( $d / $c );
+			$h -= ( $d / $c / 2 );
 		}
 	}
 
